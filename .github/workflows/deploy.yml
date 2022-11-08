@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Build and Deploy
+jobs:
+  build:
+    runs-on: drivent
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Environment variables setup
+        run: |
+          cd $GITHUB_WORKSPACE
+          echo "$SECRETS" > ./.github/workflows/scripts/env.json
+          docker run -v $GITHUB_WORKSPACE:/usr/app node:16.15-alpine sh -c "cd /usr/app && node .github/workflows/scripts/generate-env-file.js"
+        env:
+          SECRETS: ${{ toJson(secrets) }}
+
+      - name: Build
+        run: docker-compose build
+
+      - name: Run
+        run: docker-compose down && docker-compose up -d
