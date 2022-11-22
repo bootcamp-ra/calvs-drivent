@@ -5,13 +5,13 @@ import httpStatus from "http-status";
 
 export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-
+  //LELE ESTEVE AQUI hihihihi
   try {
     const enrollmentWithAddress = await enrollmentsService.getOneWithAddressByUserId(userId);
 
     return res.status(httpStatus.OK).send(enrollmentWithAddress);
   } catch (error) {
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
 
@@ -36,7 +36,7 @@ export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response
     return res.status(httpStatus.OK).send(address);
   } catch (error) {
     if (error.name === "NotFoundError") {
-      return res.send(httpStatus.NO_CONTENT);
+      return res.send(httpStatus.NOT_FOUND);
     }
   }
 }
