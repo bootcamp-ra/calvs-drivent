@@ -41,12 +41,12 @@ describe("GET /enrollments", () => {
   });
 
   describe("when token is valid", () => {
-    it("should respond with status 204 when there is no enrollment for given user", async () => {
+    it("should respond with status 404 when there is no enrollment for given user", async () => {
       const token = await generateValidToken();
 
       const response = await server.get("/enrollments").set("Authorization", `Bearer ${token}`);
 
-      expect(response.status).toBe(httpStatus.NO_CONTENT);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
 
     it("should respond with status 200 and enrollment data with address when there is a enrollment for given user", async () => {
@@ -89,7 +89,7 @@ describe("GET /enrollments/cep", () => {
   it("should respond with status 204 when CEP is valid", async () => {
     const response = await server.get("/enrollments/cep?cep=00");
 
-    expect(response.status).toBe(httpStatus.NO_CONTENT);
+    expect(response.status).toBe(httpStatus.NOT_FOUND);
   });
 });
 
