@@ -2,7 +2,7 @@ import { ApplicationError } from "@/protocols";
 
 export function cannotListHotelsError(): ApplicationError {
   return {
-    name: "CannotListHotelsError",
+    name: "cannotListHotelsError",
     message: "Cannot list hotels!",
   };
 }
