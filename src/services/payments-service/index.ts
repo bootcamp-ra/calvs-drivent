@@ -27,6 +27,15 @@ async function getPaymentByTicketId(userId: number, ticketId: number) {
   return payment;
 }
 
+async function getPaymentByUserId(userId: number) {
+  const payment = await paymentRepository.findPaymentByUserId(userId);
+
+  if (!payment) {
+    throw notFoundError();
+  }
+  return payment;
+}
+
 async function paymentProcess(ticketId: number, userId: number, cardData: CardPaymentParams) {
   await verifyTicketAndEnrollment(ticketId, userId);
 
@@ -47,16 +56,17 @@ async function paymentProcess(ticketId: number, userId: number, cardData: CardPa
 }
 
 export type CardPaymentParams = {
-  issuer: string,
-  number: number,
-  name: string,
-  expirationDate: Date,
-  cvv: number
-}
+  issuer: string;
+  number: number;
+  name: string;
+  expirationDate: Date;
+  cvv: number;
+};
 
 const paymentService = {
   getPaymentByTicketId,
   paymentProcess,
+  getPaymentByUserId,
 };
 
 export default paymentService;
