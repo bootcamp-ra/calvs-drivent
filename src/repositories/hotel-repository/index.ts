@@ -10,7 +10,11 @@ async function findRoomsByHotelId(hotelId: number) {
       id: hotelId,
     },
     include: {
-      Rooms: true,
+      Rooms: {
+        orderBy: {
+          capacity: "asc"
+        }
+      }
     }
   });
 }

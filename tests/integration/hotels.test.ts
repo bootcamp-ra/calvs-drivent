@@ -210,6 +210,11 @@ describe("GET /hotels/:hotelId", () => {
         image: createdHotel.image,
         createdAt: createdHotel.createdAt.toISOString(),
         updatedAt: createdHotel.updatedAt.toISOString(),
+        roomTypes: {
+          single: false,
+          double: false,
+          triple: true,
+        },
         Rooms: [{
           id: createdRoom.id,
           name: createdRoom.name,
@@ -242,6 +247,11 @@ describe("GET /hotels/:hotelId", () => {
           image: expect.any(String),
           createdAt: createdHotel.createdAt.toISOString(),
           updatedAt: createdHotel.updatedAt.toISOString(),
+          roomTypes: {
+            single: false,
+            double: false,
+            triple: false,
+          },
           Rooms: [],
         }
       );
