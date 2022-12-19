@@ -47,7 +47,7 @@ function hotelRoomTypes(hotel: Hotel & {
 }) {
   function hotelCapacity(array: Room[], x: number, l=0, r=array.length-1): boolean {
     if(l > r) return false; 
-    const mid = Math.floor(l+r/2);
+    const mid = Math.floor((l+r)/2);
     if(array[mid].capacity === x) return true;
     
     if(array[mid].capacity > x) return hotelCapacity(array, x, l, r=mid-1);
