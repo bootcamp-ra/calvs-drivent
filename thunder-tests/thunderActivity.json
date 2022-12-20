@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "73f1ca72-8296-4a83-aebd-f33195f42d33",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:4000/event",
+    "url": "localhost:4000/event",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-12-16T15:07:26.906Z",
+    "modified": "2022-12-16T15:07:26.906Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "1f9b6838-b60e-4a98-800f-616099ca84fa",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:4000/tickets/types",
+    "url": "localhost:4000/tickets/types",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-12-19T22:02:57.766Z",
+    "modified": "2022-12-19T22:05:39.422Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc1NTUsImlhdCI6MTY3MTQ4NTc4NX0.pePfFZpDv0mlAgfmrtqHFoqDMGqZbqj05AfXxsPaPsQ"
+      }
+    ],
+    "params": [],
+    "tests": []
+  }
+]
