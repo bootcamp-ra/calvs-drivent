@@ -4,6 +4,7 @@ import ticketRepository from "@/repositories/ticket-repository";
 import { notFoundError } from "@/errors";
 import { cannotListHotelsError } from "@/errors/cannot-list-hotels-error";
 import { Hotel, Room } from "@prisma/client";
+import bookingRepository from "@/repositories/booking-repository";
 
 async function listHotels(userId: number) {
   //Tem enrollment?
@@ -35,10 +36,12 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
   }
 
   const roomTypes = hotelRoomTypes(hotel);
+  const vacancy = await hotelVacancy(hotel);
 
   return {
     ...hotel,
     roomTypes,
+    ...vacancy
   };
 }
 
@@ -61,6 +64,17 @@ function hotelRoomTypes(hotel: Hotel & {
     double: hotelCapacity(rooms, 2),
     triple: hotelCapacity(rooms, 3),
   };  
+}
+
+async function hotelVacancy(hotel: Hotel & {
+  Rooms: Room[];
+}) {
+  const bookings = await bookingRepository.countBookings(hotel.id);
+  const totalCapacity = (hotel.Rooms).map((room) => room?.capacity).reduce((total, room) => total+room, 0);
+  
+  return {
+    vacancy: totalCapacity - bookings
+  };
 }
 
 const hotelService = {
