@@ -8,6 +8,8 @@
     "build": "ttsc -p tsconfig.build.json",
     "prepare": "husky install",
     "start": "node dist/server.js",
+    "create-prisma-schema": "npm run dev:load-envs prisma db pull",
+    "generate-prisma-client": "npx prisma generate",
     "migration:run": "prisma migrate deploy",
     "migration:generate": "npm run dev:load-envs prisma migrate dev",
     "lint": "eslint .",

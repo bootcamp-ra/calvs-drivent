@@ -6,6 +6,7 @@ import httpStatus from "http-status";
 export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Response) {
   try {
     const ticketId = Number(req.query.ticketId);
+    console.log(ticketId); //tirar dps
     const { userId } = req;
 
     if (!ticketId) {
@@ -25,14 +26,29 @@ export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Respo
   }
 }
 
+export async function getPaymentByUserId(req: AuthenticatedRequest, res: Response) {
+  try {
+    const { userId } = req;
+
+    const payment = await paymentService.getPaymentByUserId(userId);
+
+    if (!payment) {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.status(httpStatus.OK).send(payment);
+  } catch (error) {
+    if (error.name === "UnauthorizedError") {
+      return res.sendStatus(httpStatus.UNAUTHORIZED);
+    }
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
+
 export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
   try {
     const { userId } = req;
-    const {
-      ticketId,
-      cardData,
-    } = req.body;
-    
+    const { ticketId, cardData } = req.body;
+
     if (!ticketId || !cardData) {
       return res.sendStatus(httpStatus.BAD_REQUEST);
     }
