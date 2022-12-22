@@ -220,6 +220,7 @@ describe("GET /hotels/:hotelId", () => {
           hotelId: createdHotel.id,
           createdAt: createdRoom.createdAt.toISOString(),
           updatedAt: createdRoom.updatedAt.toISOString(),
+          Booking: [],
         }]
       });
     });
@@ -261,6 +262,7 @@ describe("GET /hotels/:hotelId", () => {
             hotelId: createdHotel.id,
             createdAt: createdRoom2.createdAt.toISOString(),
             updatedAt: createdRoom2.updatedAt.toISOString(),
+            Booking: [],
           },
           {
             id: createdRoom1.id,
@@ -269,6 +271,7 @@ describe("GET /hotels/:hotelId", () => {
             hotelId: createdHotel.id,
             createdAt: createdRoom1.createdAt.toISOString(),
             updatedAt: createdRoom1.updatedAt.toISOString(),
+            Booking: [],
           }
         ]
       });
@@ -290,12 +293,12 @@ describe("GET /hotels/:hotelId", () => {
       const otherUser1 = await createUser();
       const otherUser2 = await createUser();
 
-      await createBooking({
+      const booking1 = await createBooking({
         userId: otherUser1.id,
         roomId: createdRoom1.id,
         people: createdRoom1.capacity
       });
-      await createBooking({
+      const booking2 = await createBooking({
         userId: otherUser2.id,
         roomId: createdRoom2.id,
         people: createdRoom2.capacity
@@ -325,6 +328,12 @@ describe("GET /hotels/:hotelId", () => {
             hotelId: createdHotel.id,
             createdAt: createdRoom2.createdAt.toISOString(),
             updatedAt: createdRoom2.updatedAt.toISOString(),
+            Booking: [
+              {
+                id: booking2.id,
+                userId: booking2.userId,
+              }
+            ],
           },
           {
             id: createdRoom1.id,
@@ -333,6 +342,12 @@ describe("GET /hotels/:hotelId", () => {
             hotelId: createdHotel.id,
             createdAt: createdRoom1.createdAt.toISOString(),
             updatedAt: createdRoom1.updatedAt.toISOString(),
+            Booking: [
+              {
+                id: booking1.id,
+                userId: booking1.userId,
+              }
+            ],
           }
         ]
       });
