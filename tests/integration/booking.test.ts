@@ -150,7 +150,7 @@ describe("POST /booking", () => {
         people: room.capacity,
       });
 
-      expect(response.status).toEqual(httpStatus.OK);
+      expect(response.status).toEqual(httpStatus.OK); 
     });
     it("should respond with status 400 with a invalid body", async () => {
       const user = await createUser();
