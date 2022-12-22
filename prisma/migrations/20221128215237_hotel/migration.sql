@@ -26,6 +26,7 @@ CREATE TABLE "Booking" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
+    "people" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
