@@ -37,11 +37,11 @@ async function getBooking(userId: number) {
   return booking;
 }
 
-async function bookingRoomById(userId: number, roomId: number) {
+async function bookingRoomById(userId: number, roomId: number, people: number) {
   await checkEnrollmentTicket(userId);
   await checkValidBooking(roomId);
 
-  return bookingRepository.create({ roomId, userId });
+  return bookingRepository.create({ roomId, userId, people });
 }
 
 async function changeBookingRoomById(userId: number, roomId: number) {
@@ -55,7 +55,8 @@ async function changeBookingRoomById(userId: number, roomId: number) {
   return bookingRepository.upsertBooking({
     id: booking.id,
     roomId,
-    userId
+    userId,
+    people: booking.people,
   });
 }
 
