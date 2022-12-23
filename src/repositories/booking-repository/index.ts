@@ -4,12 +4,11 @@ import { Booking } from "@prisma/client";
 type CreateParams = Omit<Booking, "id" | "createdAt" | "updatedAt">;
 type UpdateParams = Omit<Booking, "createdAt" | "updatedAt">;
 
-async function create({ roomId, userId, people }: CreateParams): Promise<Booking> {
+async function create({ roomId, userId }: CreateParams): Promise<Booking> {
   return prisma.booking.create({
     data: {
       roomId,
       userId,
-      people,
     }
   });
 }
@@ -36,7 +35,7 @@ async function findByUserId(userId: number) {
   });
 }
 
-async function upsertBooking({ id, roomId, userId, people }: UpdateParams) {
+async function upsertBooking({ id, roomId, userId }: UpdateParams) {
   return prisma.booking.upsert({
     where: {
       id,
@@ -44,7 +43,6 @@ async function upsertBooking({ id, roomId, userId, people }: UpdateParams) {
     create: {
       roomId,
       userId,
-      people,
     },
     update: {
       roomId,
@@ -52,7 +50,15 @@ async function upsertBooking({ id, roomId, userId, people }: UpdateParams) {
   });
 }
 
-async function countBookings(hotelId: number) {
+async function countRoomBookings(roomId: number) {
+  return prisma.booking.count({
+    where: {
+      roomId: roomId
+    }
+  });
+}
+
+async function countHotelBookings(hotelId: number) {
   return prisma.booking.count({
     where: {
       Room: {
@@ -67,7 +73,8 @@ const bookingRepository = {
   findByRoomId,
   findByUserId,
   upsertBooking,
-  countBookings,
+  countHotelBookings,
+  countRoomBookings,
 };
 
 export default bookingRepository;
