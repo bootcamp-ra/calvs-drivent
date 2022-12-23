@@ -10,6 +10,7 @@
     "start": "node dist/server.js",
     "create-prisma-schema": "npm run dev:load-envs prisma db pull",
     "generate-prisma-client": "npx prisma generate",
+    "db:dump": "sudo su -c 'pg_dump drivent --inserts --no-owner' postgres > dump.sql",
     "migration:run": "prisma migrate deploy",
     "migration:generate": "npm run dev:load-envs prisma migrate dev",
     "lint": "eslint .",
