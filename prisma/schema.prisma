@@ -134,7 +134,6 @@ model Booking {
   id        Int      @id @default(autoincrement())
   User      User     @relation(fields: [userId], references: [id])
   userId    Int
-  people    Int
   Room      Room     @relation(fields: [roomId], references: [id])
   roomId    Int
   createdAt DateTime @default(now())

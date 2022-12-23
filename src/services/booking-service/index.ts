@@ -33,15 +33,19 @@ async function getBooking(userId: number) {
   if (!booking) {
     throw notFoundError();
   }
+  const occupants = await bookingRepository.countRoomBookings(booking.roomId);
 
-  return booking;
+  return {
+    ...booking,
+    occupants,
+  };
 }
 
-async function bookingRoomById(userId: number, roomId: number, people: number) {
+async function bookingRoomById(userId: number, roomId: number) {
   await checkEnrollmentTicket(userId);
   await checkValidBooking(roomId);
 
-  return bookingRepository.create({ roomId, userId, people });
+  return bookingRepository.create({ roomId, userId });
 }
 
 async function changeBookingRoomById(userId: number, roomId: number) {
@@ -56,7 +60,6 @@ async function changeBookingRoomById(userId: number, roomId: number) {
     id: booking.id,
     roomId,
     userId,
-    people: booking.people,
   });
 }
 
