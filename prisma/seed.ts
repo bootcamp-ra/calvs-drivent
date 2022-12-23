@@ -16,48 +16,6 @@ async function main() {
     });
   }
 
-  let ticketType = await prisma.ticketType.findMany();
-  if (!ticketType) {
-    await prisma.ticketType.createMany({
-      data: [
-        {
-          name: "Online",
-          price: 10000,
-          isRemote: true,
-          includesHotel: false
-        },
-        {
-          name: "Com hotel",
-          price: 60000,
-          isRemote: false,
-          includesHotel: true
-        },
-        {
-          name: "Sem hotel",
-          price: 25000,
-          isRemote: false,
-          includesHotel: false
-        },
-      ]
-    });
-  }
-
-  let activitiesDate = await prisma.activitiesDate.findMany();
-  if (!activitiesDate) {
-    await prisma.activitiesDate.createMany({
-      data: [
-        {
-          date: dayjs().add(2, "days").toDate(),
-          weekday: "Sabado",
-        },
-        {
-          date: dayjs().add(3, "days").toDate(),
-          weekday: "Domingo",
-        },
-      ]
-    })
-  }
-
   console.log({ event });
 }
 
