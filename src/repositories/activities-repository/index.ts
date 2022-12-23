@@ -1,8 +1,7 @@
-import { prisma } from "@prisma/client";
+import { prisma } from "@/config";
 
 async function findActivitiesDays() {
-  //DESCOMENTAR QUANDO O BANCO DE ATIVIDADES FOR CRIADO
-  // return prisma.activitiesDays.findMany();
+  return prisma.activitiesDate.findMany();
 }
 
 const activitiesRepository = {
