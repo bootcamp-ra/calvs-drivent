@@ -144,6 +144,7 @@ CREATE TABLE "Booking" (
 CREATE TABLE "ActivitiesDate" (
     "id" SERIAL NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
+    "weekday" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
