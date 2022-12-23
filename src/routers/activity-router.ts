@@ -6,6 +6,6 @@ const activityRouter = Router();
 
 activityRouter
   .all("/*", authenticateToken)
-  .get("", listActivities);
+  .get("/", listActivities);
 
 export { activityRouter };

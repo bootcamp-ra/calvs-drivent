@@ -140,6 +140,8 @@ model Activity {
   time         DateTime   @db.Time(6)
   duration     DateTime   @db.Time(6)
   ticketTypeId Int
+  vacancies    Int
+  capacity     Int
   TicketType   TicketType @relation(fields: [ticketTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 

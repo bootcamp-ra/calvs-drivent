@@ -7,7 +7,12 @@ async function findByTicketTypeId(ticketTypeId: number) {
     },
     include: {
       TicketType: true,
-    }
+    },
+    orderBy: [
+      {
+        time: "asc",
+      }
+    ]
   });
 }
 
