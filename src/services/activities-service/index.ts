@@ -4,10 +4,9 @@ import activitiesRepository from "@/repositories/activities-repository";
 async function getActivitiesDays() {
   const activitiesDays = await activitiesRepository.findActivitiesDays();
 
-  //DESCOMENTAR QUANDO O BANCO DE ATIVIDADES FOR CRIADO
-  //   if (!activitiesDays) {
-  //     throw notFoundError();
-  //   }
+  if (!activitiesDays) {
+    throw notFoundError();
+  }
   return activitiesDays;
 }
 
