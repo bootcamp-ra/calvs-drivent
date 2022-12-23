@@ -81,6 +81,7 @@ describe("GET /booking", () => {
       const booking = await createBooking({
         userId: user.id,
         roomId: room.id,
+        people: room.capacity,
       });
 
       const response = await server.get("/booking").set("Authorization", `Bearer ${token}`);
@@ -88,6 +89,7 @@ describe("GET /booking", () => {
       expect(response.status).toEqual(httpStatus.OK);
       expect(response.body).toEqual({
         id: booking.id,
+        people: booking.people,
         Room: {
           id: expect.any(Number),
           name: expect.any(String),
@@ -146,9 +148,10 @@ describe("POST /booking", () => {
 
       const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send({
         roomId: room.id,
+        people: room.capacity,
       });
 
-      expect(response.status).toEqual(httpStatus.OK);
+      expect(response.status).toEqual(httpStatus.OK); 
     });
     it("should respond with status 400 with a invalid body", async () => {
       const user = await createUser();
@@ -197,14 +200,17 @@ describe("POST /booking", () => {
       await createBooking({
         userId: user.id,
         roomId: room.id,
+        people: room.capacity,
       });
       await createBooking({
         userId: user.id,
         roomId: room.id,
+        people: room.capacity,
       });
       await createBooking({
         userId: user.id,
         roomId: room.id,
+        people: room.capacity,
       });
 
       const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send({
@@ -287,6 +293,7 @@ describe("PUT /booking", () => {
       const booking = await createBooking({
         roomId: room.id,
         userId: user.id,
+        people: 2,
       });
 
       const otherRoom = await createRoomWithHotelId(hotel.id, 3);
@@ -311,6 +318,7 @@ describe("PUT /booking", () => {
       await createBooking({
         roomId: room.id,
         userId: user.id,
+        people: room.capacity,
       });
 
       const otherRoom = await createRoomWithHotelId(hotel.id, 3);
@@ -335,6 +343,7 @@ describe("PUT /booking", () => {
       const booking = await createBooking({
         roomId: room.id,
         userId: user.id,
+        people: room.capacity,
       });
 
       const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send({
@@ -357,6 +366,7 @@ describe("PUT /booking", () => {
       const booking = await createBooking({
         roomId: room.id,
         userId: user.id,
+        people: room.capacity,
       });
       const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send({
         roomId: room.id + 1,
@@ -379,14 +389,17 @@ describe("PUT /booking", () => {
       const booking = await createBooking({
         userId: user.id,
         roomId: otherRoom.id,
+        people: otherRoom.capacity,
       });
       await createBooking({
         userId: user.id,
         roomId: otherRoom.id,
+        people: otherRoom.capacity,
       });
       await createBooking({
         userId: user.id,
         roomId: otherRoom.id,
+        people: otherRoom.capacity,
       });
 
       const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send({
@@ -411,6 +424,7 @@ describe("PUT /booking", () => {
       const otherUserBooking = await createBooking({
         userId: otherUser.id,
         roomId: room.id,
+        people: 2,
       });
 
       const response = await server.put(`/booking/${otherUserBooking.id}`).set("Authorization", `Bearer ${token}`).send({
