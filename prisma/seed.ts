@@ -23,6 +23,7 @@ async function main() {
   await prisma.ticketType.deleteMany();
   await prisma.room.deleteMany();
   await prisma.hotel.deleteMany();
+  await prisma.activitiesDate.deleteMany();
 
   const newtypes = await prisma.ticketType.createMany({
     data: [
@@ -121,21 +122,18 @@ async function main() {
     ]
   });
 
-  let activitiesDate = await prisma.activitiesDate.findMany();
-  if (!activitiesDate) {
-    await prisma.activitiesDate.createMany({
-      data: [
-        {
-          date: dayjs().add(2, "days").toDate(),
-          weekday: "Sabado",
-        },
-        {
-          date: dayjs().add(3, "days").toDate(),
-          weekday: "Domingo",
-        },
-      ]
-    })
-  }
+  const activitiesDate = await prisma.activitiesDate.createMany({
+    data:[
+      {
+        date: dayjs().add(2, "days").toDate(),
+        weekday: "Sabado",
+      },
+      {
+        date: dayjs().add(3, "days").toDate(),
+        weekday: "Domingo",
+      },
+    ]
+  });
 
   console.log(event);
   console.log(newtypes);
@@ -143,6 +141,7 @@ async function main() {
   console.log(hotel2);
   console.log(rooms1);
   console.log(rooms2);
+  console.log(activitiesDate);
 }
 
 main()
