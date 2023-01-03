@@ -17,3 +17,19 @@ export async function listActivities(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
+
+export async function enterActivity(req: AuthenticatedRequest, res: Response) {
+  try {
+    const { ticketId, activityId } = req.body;
+    const ticketActivity = await activityService.postTicketActivity(ticketId, activityId);
+    return res.status(httpStatus.CREATED).send(ticketActivity);
+  } catch (error) {
+    if(error.details[0]==="Activity time conflict") {
+      return res.sendStatus(httpStatus.CONFLICT);
+    }
+    if(error.message==="Invalid data") {
+      return res.sendStatus(httpStatus.BAD_REQUEST);
+    }
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
