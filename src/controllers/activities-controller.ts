@@ -21,3 +21,19 @@ export async function getActivitiesDays(req: AuthenticatedRequest, res: Response
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
 }
+
+export async function getActivitiesSpace(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+
+  try {
+    const ticket = await ticketService.getTicketByUserId(userId);
+    if (ticket.status === "RESERVED" || ticket.TicketType.isRemote === true) {
+      return res.sendStatus(httpStatus.FORBIDDEN);
+    }
+    const activitiesSpace = await activitiesService.getActivitiesSpace();
+
+    return res.status(httpStatus.OK).send(activitiesSpace);
+  } catch (error) {
+    return res.sendStatus(httpStatus.NO_CONTENT);
+  }
+}

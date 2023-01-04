@@ -10,8 +10,18 @@ async function getActivitiesDays() {
   return activitiesDays;
 }
 
+async function getActivitiesSpace() {
+  const activitiesSpace = await activitiesRepository.findActivitiesSpace();
+
+  if (!activitiesSpace) {
+    throw notFoundError();
+  }
+  return activitiesSpace;
+}
+
 const activitiesService = {
   getActivitiesDays,
+  getActivitiesSpace,
 };
 
 export default activitiesService;

@@ -24,6 +24,7 @@ async function main() {
   await prisma.room.deleteMany();
   await prisma.hotel.deleteMany();
   await prisma.activitiesDate.deleteMany();
+  await prisma.activitiesSpace.deleteMany();
 
   const newtypes = await prisma.ticketType.createMany({
     data: [
@@ -135,6 +136,20 @@ async function main() {
     ]
   });
 
+  const activitiesSpace = await prisma.activitiesSpace.createMany({
+    data:[
+      {
+        name: "Auditório Principal",
+      },
+      {
+        name: "Auditório Lateral",
+      },
+      {
+        name: "Sala de Workshop",
+      },
+    ]
+  });
+
   console.log(event);
   console.log(newtypes);
   console.log(hotel1);
@@ -142,6 +157,7 @@ async function main() {
   console.log(rooms1);
   console.log(rooms2);
   console.log(activitiesDate);
+  console.log(activitiesSpace);
 }
 
 main()
