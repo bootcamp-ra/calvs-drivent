@@ -170,6 +170,8 @@ model Activities {
   duration          Int           @default(1)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
+
+  @@index([dateId])
 }
 
 model ActivitiesBooking {
