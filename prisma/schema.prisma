@@ -144,7 +144,7 @@ model ActivitiesDate {
   id            Int             @id @default(autoincrement())
   date          DateTime        @unique
   weekday       String
-  DateSpaceTime DateSpaceTime[]
+  Activities    Activities[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
@@ -152,39 +152,22 @@ model ActivitiesDate {
 model ActivitiesSpace {
   id            Int             @id @default(autoincrement())
   name          String          @unique
-  DateSpaceTime DateSpaceTime[]
+  Activities    Activities[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-}
-
-model ActivitiesTime {
-  id            Int             @id @default(autoincrement())
-  date          DateTime        @unique
-  DateSpaceTime DateSpaceTime[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-}
-
-model DateSpaceTime {
-  id              Int             @id @default(autoincrement())
-  ActivitiesDate  ActivitiesDate  @relation(fields: [dateId], references: [id])
-  dateId          Int
-  ActivitiesSpace ActivitiesSpace @relation(fields: [spaceId], references: [id])
-  spaceId         Int
-  ActivitiesTime  ActivitiesTime  @relation(fields: [timeId], references: [id])
-  timeId          Int
-  Activities      Activities[]
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
 }
 
 model Activities {
   id                Int           @id @default(autoincrement())
   name              String
-  DateSpaceTime     DateSpaceTime @relation(fields: [dateSpaceTimeId], references: [id])
-  dateSpaceTimeId   Int
+  ActivitiesDate    ActivitiesDate  @relation(fields: [dateId], references: [id])
+  dateId            Int
+  ActivitiesSpace   ActivitiesSpace @relation(fields: [spaceId], references: [id])
+  spaceId           Int
   ActivitiesBooking ActivitiesBooking[]
   capacity          Int
+  start             Int           @default(9)
+  duration          Int           @default(1)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 }
