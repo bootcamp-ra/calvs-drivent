@@ -19,9 +19,19 @@ async function getActivitiesSpace() {
   return activitiesSpace;
 }
 
+async function getActivities(dateId: number, spaceId: number) {
+  const activities = await activitiesRepository.findActivities(dateId, spaceId);
+
+  if (!activities) {
+    throw notFoundError();
+  }
+  return activities;
+}
+
 const activitiesService = {
   getActivitiesDays,
   getActivitiesSpace,
+  getActivities,
 };
 
 export default activitiesService;

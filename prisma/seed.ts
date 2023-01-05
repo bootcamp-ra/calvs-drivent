@@ -123,29 +123,111 @@ async function main() {
     ]
   });
 
-  const activitiesDate = await prisma.activitiesDate.createMany({
-    data:[
-      {
-        date: dayjs().add(2, "days").toDate(),
-        weekday: "Sabado",
-      },
-      {
-        date: dayjs().add(3, "days").toDate(),
-        weekday: "Domingo",
-      },
-    ]
+  const activitiesDate1 = await prisma.activitiesDate.create({
+    data:{
+      date: dayjs().add(2, "days").toDate(),
+      weekday: "Sabado",
+    },
   });
 
-  const activitiesSpace = await prisma.activitiesSpace.createMany({
+  const activitiesDate2 = await prisma.activitiesDate.create({
+    data:{
+      date: dayjs().add(3, "days").toDate(),
+      weekday: "Domingo",
+    },
+  });
+
+  const activitiesSpace1 = await prisma.activitiesSpace.create({
+    data:{
+      name: "Auditório Principal",
+    },
+  });
+
+  const activitiesSpace2 = await prisma.activitiesSpace.create({
+    data:{
+      name: "Auditório Lateral",
+    },
+  });
+
+  const activitiesSpace3 = await prisma.activitiesSpace.create({
+    data:{
+      name: "Sala de Workshop",
+    },
+  });
+
+  const activities = await prisma.activities.createMany({
     data:[
       {
-        name: "Auditório Principal",
+        name: "Palestra A",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace1.id,
+        duration: 2,
+        start: 9,
       },
       {
-        name: "Auditório Lateral",
+        name: "Palestra B",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace1.id,
+        duration: 2,
+        start: 11,
       },
       {
-        name: "Sala de Workshop",
+        name: "Palestra C",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace2.id,
+        duration: 1,
+        start: 9,
+      },
+      {
+        name: "Palestra D",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace2.id,
+        duration: 1,
+        start: 10,
+      },
+      {
+        name: "Palestra E",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace3.id,
+        duration: 1,
+        start: 9,
+      },
+      {
+        name: "Palestra F",
+        capacity: 25,
+        dateId: activitiesDate1.id,
+        spaceId: activitiesSpace3.id,
+        duration: 2,
+        start: 10,
+      },
+      {
+        name: "Palestra G",
+        capacity: 25,
+        dateId: activitiesDate2.id,
+        spaceId: activitiesSpace1.id,
+        duration: 2,
+        start: 9,
+      },
+      {
+        name: "Palestra H",
+        capacity: 25,
+        dateId: activitiesDate2.id,
+        spaceId: activitiesSpace2.id,
+        duration: 1,
+        start: 9,
+      },
+      {
+        name: "Palestra I",
+        capacity: 25,
+        dateId: activitiesDate2.id,
+        spaceId: activitiesSpace3.id,
+        duration: 1,
+        start: 9,
       },
     ]
   });
@@ -156,8 +238,11 @@ async function main() {
   console.log(hotel2);
   console.log(rooms1);
   console.log(rooms2);
-  console.log(activitiesDate);
-  console.log(activitiesSpace);
+  console.log(activitiesDate1);
+  console.log(activitiesDate2);
+  console.log(activitiesSpace1);
+  console.log(activitiesSpace2);
+  console.log(activitiesSpace3);
 }
 
 main()
