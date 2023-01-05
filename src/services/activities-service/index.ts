@@ -28,10 +28,20 @@ async function getActivities(dateId: number, spaceId: number) {
   return activities;
 }
 
+async function getActivitiesBookingCounting(activitieId: number) {
+  const activitiesBooking = await activitiesRepository.findActivitiesBookingCount(activitieId);
+
+  if (!activitiesBooking) {
+    throw notFoundError();
+  }
+  return activitiesBooking;
+}
+
 const activitiesService = {
   getActivitiesDays,
   getActivitiesSpace,
   getActivities,
+  getActivitiesBookingCounting,
 };
 
 export default activitiesService;
