@@ -57,3 +57,21 @@ export async function getActivities(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
 }
+
+export async function getActivitiesBookingCount(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const activitieId = Number(req.params.activitieId);
+
+  try {
+    const ticket = await ticketService.getTicketByUserId(userId);
+    if (ticket.status === "RESERVED" || ticket.TicketType.isRemote === true) {
+      return res.sendStatus(httpStatus.FORBIDDEN);
+    }
+
+    const activitiesBookingCount = await activitiesService.getActivitiesBookingCounting(activitieId);
+
+    return res.status(httpStatus.OK).send({ activitiesBookingCount });
+  } catch (error) {
+    return res.status(httpStatus.OK).send({ activitiesBookingCount: 0 });
+  }
+}

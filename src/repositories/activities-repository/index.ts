@@ -17,10 +17,19 @@ async function findActivities(dateId: number, spaceId: number) {
   });
 }
 
+async function findActivitiesBookingCount(activitieId: number) {
+  return prisma.activitiesBooking.count({
+    where: {
+      activitieId: activitieId,
+    }
+  });
+}
+
 const activitiesRepository = {
   findActivitiesDays,
   findActivitiesSpace,
   findActivities,
+  findActivitiesBookingCount,
 };
 
 export default activitiesRepository;
