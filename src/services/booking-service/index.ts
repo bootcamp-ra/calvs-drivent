@@ -33,8 +33,12 @@ async function getBooking(userId: number) {
   if (!booking) {
     throw notFoundError();
   }
+  const occupants = await bookingRepository.countRoomBookings(booking.roomId);
 
-  return booking;
+  return {
+    ...booking,
+    occupants,
+  };
 }
 
 async function bookingRoomById(userId: number, roomId: number) {
@@ -55,7 +59,7 @@ async function changeBookingRoomById(userId: number, roomId: number) {
   return bookingRepository.upsertBooking({
     id: booking.id,
     roomId,
-    userId
+    userId,
   });
 }
 

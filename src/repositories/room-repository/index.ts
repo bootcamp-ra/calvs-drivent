@@ -1,13 +1,5 @@
 import { prisma } from "@/config";
 
-async function findAllByHotelId(hotelId: number) {
-  return prisma.room.findMany({
-    where: {
-      hotelId,
-    }
-  });
-}
-
 async function findById(roomId: number) {
   return prisma.room.findFirst({
     where: {
@@ -17,7 +9,6 @@ async function findById(roomId: number) {
 }
 
 const roomRepository = {
-  findAllByHotelId,
   findById
 };
 
