@@ -1,4 +1,4 @@
-import { SignInParams } from "@/services";
+import { SignInParams } from "@/services/authentication-service";
 import Joi from "joi";
 
 export const signInSchema = Joi.object<SignInParams>({

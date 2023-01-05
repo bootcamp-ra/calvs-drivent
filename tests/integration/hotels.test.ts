@@ -296,12 +296,10 @@ describe("GET /hotels/:hotelId", () => {
       const booking1 = await createBooking({
         userId: otherUser1.id,
         roomId: createdRoom1.id,
-        people: createdRoom1.capacity
       });
       const booking2 = await createBooking({
         userId: otherUser2.id,
         roomId: createdRoom2.id,
-        people: createdRoom2.capacity
       });
 
       const response = await server.get(`/hotels/${createdHotel.id}`).set("Authorization", `Bearer ${token}`);
