@@ -15,6 +15,8 @@ async function main() {
       },
     });
   }
+  
+  console.log("oi");
 
   await prisma.activitiesBooking.deleteMany();
   await prisma.booking.deleteMany();
