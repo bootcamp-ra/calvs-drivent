@@ -162,33 +162,14 @@ CREATE TABLE "ActivitiesSpace" (
 );
 
 -- CreateTable
-CREATE TABLE "ActivitiesTime" (
-    "id" SERIAL NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "ActivitiesTime_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "DateSpaceTime" (
-    "id" SERIAL NOT NULL,
-    "dateId" INTEGER NOT NULL,
-    "spaceId" INTEGER NOT NULL,
-    "timeId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "DateSpaceTime_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Activities" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "dateSpaceTimeId" INTEGER NOT NULL,
+    "dateId" INTEGER NOT NULL,
+    "spaceId" INTEGER NOT NULL,
     "capacity" INTEGER NOT NULL,
+    "start" INTEGER NOT NULL DEFAULT 9,
+    "duration" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -222,7 +203,7 @@ CREATE UNIQUE INDEX "ActivitiesDate_date_key" ON "ActivitiesDate"("date");
 CREATE UNIQUE INDEX "ActivitiesSpace_name_key" ON "ActivitiesSpace"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ActivitiesTime_date_key" ON "ActivitiesTime"("date");
+CREATE INDEX "Activities_dateId_idx" ON "Activities"("dateId");
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -252,16 +233,10 @@ ALTER TABLE "Booking" ADD CONSTRAINT "Booking_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DateSpaceTime" ADD CONSTRAINT "DateSpaceTime_dateId_fkey" FOREIGN KEY ("dateId") REFERENCES "ActivitiesDate"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Activities" ADD CONSTRAINT "Activities_dateId_fkey" FOREIGN KEY ("dateId") REFERENCES "ActivitiesDate"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DateSpaceTime" ADD CONSTRAINT "DateSpaceTime_spaceId_fkey" FOREIGN KEY ("spaceId") REFERENCES "ActivitiesSpace"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "DateSpaceTime" ADD CONSTRAINT "DateSpaceTime_timeId_fkey" FOREIGN KEY ("timeId") REFERENCES "ActivitiesTime"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Activities" ADD CONSTRAINT "Activities_dateSpaceTimeId_fkey" FOREIGN KEY ("dateSpaceTimeId") REFERENCES "DateSpaceTime"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Activities" ADD CONSTRAINT "Activities_spaceId_fkey" FOREIGN KEY ("spaceId") REFERENCES "ActivitiesSpace"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ActivitiesBooking" ADD CONSTRAINT "ActivitiesBooking_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "Ticket"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

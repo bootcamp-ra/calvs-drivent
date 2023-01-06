@@ -25,7 +25,7 @@ beforeEach(async () => {
 
 const server = supertest(app);
 
-describe("GET /activities", () => {
+describe("GET /activities/days", () => {
   it("should respond with status 401 if no token is given", async () => {
     const response = await server.get("/activities/days");
 

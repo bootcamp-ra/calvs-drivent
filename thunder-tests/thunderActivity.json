@@ -37,15 +37,15 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:4000/activities/days",
-    "url": "http://localhost:4000/activities/days",
+    "url": "http://localhost:4000/activities/booking/2",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-12-23T12:52:38.940Z",
-    "modified": "2022-12-23T13:57:57.561Z",
+    "modified": "2023-01-05T20:51:45.869Z",
     "headers": [
       {
         "name": "Authorization",
-        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MTgwMzQ2NX0.laNK4tm7qIXEgcbKY0Wmy6qSmiYdC3FTY4EV83n6Lbg"
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MjgzNTQxNH0.5Rup-PSv2TiNRmRu1TiU4_cvl4arv1MhvKyYefMMg9I"
       }
     ],
     "params": [],
