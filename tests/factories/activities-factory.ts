@@ -9,3 +9,11 @@ export async function createActivitiesDays() {
     },
   });
 }
+
+export async function createActivitiesSpace() {
+  return await prisma.activitiesSpace.create({
+    data: {
+      name: faker.locale,
+    },
+  });
+}
