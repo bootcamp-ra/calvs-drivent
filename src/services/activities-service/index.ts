@@ -10,12 +10,22 @@ async function getActivitiesDays() {
   return activitiesDays;
 }
 
+async function getActivitiesDayById(dateId: number) {
+  const activitiesDay = await activitiesRepository.findActivitiesDayById(dateId);
+  return activitiesDay;
+}
+
 async function getActivitiesSpace() {
   const activitiesSpace = await activitiesRepository.findActivitiesSpace();
 
   if (!activitiesSpace) {
     throw notFoundError();
   }
+  return activitiesSpace;
+}
+
+async function getActivitiesSpaceById(spaceId: number) {
+  const activitiesSpace = await activitiesRepository.findActivitiesSpaceById(spaceId);
   return activitiesSpace;
 }
 
@@ -39,7 +49,9 @@ async function getActivitiesBookingCounting(activitieId: number) {
 
 const activitiesService = {
   getActivitiesDays,
+  getActivitiesDayById,
   getActivitiesSpace,
+  getActivitiesSpaceById,
   getActivities,
   getActivitiesBookingCounting,
 };
