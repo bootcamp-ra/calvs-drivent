@@ -17,6 +17,16 @@ export async function createUser({ email, password }: CreateUserParams): Promise
   });
 }
 
+// export async function createUserWithGit(email: string): Promise<User> {
+//   await canEnrollOrFail();
+
+//   await validateUniqueEmailOrFail(email);
+
+//   return userRepository.create({
+//     email,
+//   });
+// }
+
 async function validateUniqueEmailOrFail(email: string) {
   const userWithSameEmail = await userRepository.findByEmail(email);
   if (userWithSameEmail) {
@@ -30,6 +40,12 @@ async function canEnrollOrFail() {
     throw cannotEnrollBeforeStartDateError();
   }
 }
+
+// async function validateUniqueEmailOrFailGit(email: string) {
+//   const userWithSameEmail = await userRepository.findByEmail(email);
+
+//   return userWithSameEmail;
+// }
 
 export type CreateUserParams = Pick<User, "email" | "password">;
 
