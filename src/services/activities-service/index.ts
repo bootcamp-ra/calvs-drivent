@@ -54,11 +54,11 @@ async function getActivitiesBookingCounting(activitieId: number) {
 function activitieConflict(activitie: Activities, userBooking: (ActivitiesBooking & { Activities: Activities; })[] ) {
   for(let i=0; i<userBooking.length; i++) {
     if(userBooking[i].Activities.dateId === activitie.dateId) {
-      if(
-        activitie.start >= userBooking[i].Activities.start && 
-        activitie.start < userBooking[i].Activities.start + userBooking[i].Activities.duration
-      ) return true;
-      else if(activitie.start + activitie.duration > userBooking[i].Activities.start) return true;
+      if(activitie.start >= userBooking[i].Activities.start && activitie.start < userBooking[i].Activities.start + userBooking[i].Activities.duration) {
+        return true;
+      } else if(activitie.start + activitie.duration > userBooking[i].Activities.start) {
+        return true;
+      }
     }
   }
   return false;
