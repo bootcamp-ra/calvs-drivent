@@ -55,6 +55,7 @@ async function bookActivity(userId: number, activitieId: number) {
   const ticket = await ticketService.getTicketByUserId(userId);
 
   if(activitieId < 1) throw requestError(400, "Bad request");
+  //activity exists and resolve hour conflicts 
 
   await activitiesRepository.createActivityBooking(ticket.id, activitieId);
   return;

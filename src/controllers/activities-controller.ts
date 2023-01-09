@@ -95,7 +95,7 @@ export async function postActivitieBooking(req: AuthenticatedRequest, res: Respo
     return res.sendStatus(httpStatus.OK);
   } catch (error) {
     if (error.name === "RequestError") return res.sendStatus(httpStatus.BAD_REQUEST);
-    if (error.name === "cannotListHotelsError") return res.sendStatus(httpStatus.PAYMENT_REQUIRED);
+    if (error.name === "cannotListHotelsError") return res.sendStatus(httpStatus.FORBIDDEN);
     if (error.name === "notFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
