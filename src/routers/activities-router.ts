@@ -9,7 +9,7 @@ activitiesRouter
   .get("/days", getActivitiesDays)
   .get("/space", getActivitiesSpace)
   .get("/booking/:activitieId", getActivitiesBookingCount)
-  .get("/:dateId/:spaceId", getActivities)
-  .post("/booking/:activitieId", postActivitieBooking);
+  .post("/booking/:activitieId", postActivitieBooking)
+  .get("/:dateId/:spaceId", getActivities);
 
 export { activitiesRouter };

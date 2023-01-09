@@ -41,6 +41,25 @@ async function findActivitiesBookingCount(activitieId: number) {
   });
 }
 
+async function findActivitieById(activitieId: number) {
+  return prisma.activities.findFirst({
+    where: {
+      id: activitieId,
+    }
+  });
+}
+
+async function findActivitiesBookingByUser(ticketId: number) {
+  return prisma.activitiesBooking.findMany({
+    where: {
+      ticketId: ticketId,
+    },
+    include: {
+      Activities: true,
+    }
+  });  
+}
+
 async function createActivityBooking(ticketId: number, activitieId: number) {
   return prisma.activitiesBooking.create({
     data: {
@@ -57,6 +76,8 @@ const activitiesRepository = {
   findActivitiesSpaceById,
   findActivities,
   findActivitiesBookingCount,
+  findActivitieById,
+  findActivitiesBookingByUser,
   createActivityBooking,
 };
 

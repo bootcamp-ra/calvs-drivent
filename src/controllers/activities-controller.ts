@@ -91,11 +91,12 @@ export async function postActivitieBooking(req: AuthenticatedRequest, res: Respo
   const activitieId = Number(req.params.activitieId);
 
   try {
-    await activitiesService.bookActivity(userId, activitieId);
-    return res.sendStatus(httpStatus.OK);
+    const booking = await activitiesService.bookActivity(userId, activitieId);
+    return res.status(httpStatus.OK).send(booking);
   } catch (error) {
     if (error.name === "RequestError") return res.sendStatus(httpStatus.BAD_REQUEST);
     if (error.name === "cannotListHotelsError") return res.sendStatus(httpStatus.FORBIDDEN);
-    if (error.name === "notFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
+    if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
+    if (error.name === "ConflictError") return res.sendStatus(httpStatus.FORBIDDEN);
   }
 }
