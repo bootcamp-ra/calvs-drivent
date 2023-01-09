@@ -85,3 +85,17 @@ export async function getActivitiesBookingCount(req: AuthenticatedRequest, res: 
     return res.status(httpStatus.OK).send({ activitiesBookingCount: 0 });
   }
 }
+
+export async function postActivitieBooking(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const activitieId = Number(req.params.activitieId);
+
+  try {
+    await activitiesService.bookActivity(userId, activitieId);
+    return res.sendStatus(httpStatus.OK);
+  } catch (error) {
+    if (error.name === "RequestError") return res.sendStatus(httpStatus.BAD_REQUEST);
+    if (error.name === "cannotListHotelsError") return res.sendStatus(httpStatus.PAYMENT_REQUIRED);
+    if (error.name === "notFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}

@@ -1,5 +1,8 @@
-import { notFoundError } from "@/errors";
+
+import { notFoundError, requestError } from "@/errors";
 import activitiesRepository from "@/repositories/activities-repository";
+import hotelService from "../hotels-service";
+import ticketService from "../tickets-service";
 
 async function getActivitiesDays() {
   const activitiesDays = await activitiesRepository.findActivitiesDays();
@@ -47,6 +50,16 @@ async function getActivitiesBookingCounting(activitieId: number) {
   return activitiesBooking;
 }
 
+async function bookActivity(userId: number, activitieId: number) {
+  await hotelService.listHotels(userId);
+  const ticket = await ticketService.getTicketByUserId(userId);
+
+  if(activitieId < 1) throw requestError(400, "Bad request");
+
+  await activitiesRepository.createActivityBooking(ticket.id, activitieId);
+  return;
+}
+
 const activitiesService = {
   getActivitiesDays,
   getActivitiesDayById,
@@ -54,6 +67,7 @@ const activitiesService = {
   getActivitiesSpaceById,
   getActivities,
   getActivitiesBookingCounting,
+  bookActivity,
 };
 
 export default activitiesService;

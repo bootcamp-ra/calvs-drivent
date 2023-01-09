@@ -41,6 +41,15 @@ async function findActivitiesBookingCount(activitieId: number) {
   });
 }
 
+async function createActivityBooking(ticketId: number, activitieId: number) {
+  return prisma.activitiesBooking.create({
+    data: {
+      ticketId,
+      activitieId,
+    }
+  });
+}
+
 const activitiesRepository = {
   findActivitiesDays,
   findActivitiesDayById,
@@ -48,6 +57,7 @@ const activitiesRepository = {
   findActivitiesSpaceById,
   findActivities,
   findActivitiesBookingCount,
+  createActivityBooking,
 };
 
 export default activitiesRepository;
