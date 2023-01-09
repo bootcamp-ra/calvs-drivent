@@ -430,13 +430,7 @@ describe("POST /activities/booking/:activitieId", () => {
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketTypeWithHotel();
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-      const ticketId = ticket.id;
       await createPayment(ticket.id, ticketType.price);
-
-      const activitiesDate =  await createActivitiesDays();
-      const dateId = activitiesDate.id;
-      const activitiesSpace = await createActivitiesSpace();
-      const spaceId = activitiesSpace.id;
 
       const response = await server.post("/activities/booking/string").set("Authorization", `Bearer ${token}`);
 
@@ -449,13 +443,7 @@ describe("POST /activities/booking/:activitieId", () => {
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketTypeWithHotel();
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-      const ticketId = ticket.id;
       await createPayment(ticket.id, ticketType.price);
-
-      const activitiesDate =  await createActivitiesDays();
-      const dateId = activitiesDate.id;
-      const activitiesSpace = await createActivitiesSpace();
-      const spaceId = activitiesSpace.id;
 
       const response = await server.post("/activities/booking/0").set("Authorization", `Bearer ${token}`);
 
@@ -493,7 +481,6 @@ describe("POST /activities/booking/:activitieId", () => {
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketTypeWithHotel();
       const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-      const ticketId = ticket.id;
       await createPayment(ticket.id, ticketType.price);
 
       const activitiesDate =  await createActivitiesDays();
