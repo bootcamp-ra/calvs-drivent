@@ -50,6 +50,16 @@ export async function getActivities(req: AuthenticatedRequest, res: Response) {
       return res.sendStatus(httpStatus.FORBIDDEN);
     }
 
+    const activitiesDate = await activitiesService.getActivitiesDayById(dateId);
+    if (dateId != activitiesDate.id) {
+      return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+
+    const activitiesSpace = await activitiesService.getActivitiesSpaceById(spaceId);
+    if (spaceId != activitiesSpace.id) {
+      return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+
     const activities = await activitiesService.getActivities(dateId, spaceId);
 
     return res.status(httpStatus.OK).send(activities);

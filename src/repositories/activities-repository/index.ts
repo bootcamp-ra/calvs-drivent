@@ -4,8 +4,24 @@ async function findActivitiesDays() {
   return prisma.activitiesDate.findMany();
 }
 
+async function findActivitiesDayById(dateId: number) {
+  return prisma.activitiesDate.findFirst({
+    where: {
+      id: dateId,
+    }
+  });
+}
+
 async function findActivitiesSpace() {
   return prisma.activitiesSpace.findMany();
+}
+
+async function findActivitiesSpaceById(spaceId: number) {
+  return prisma.activitiesSpace.findFirst({
+    where: {
+      id: spaceId,
+    }
+  });
 }
 
 async function findActivities(dateId: number, spaceId: number) {
@@ -27,7 +43,9 @@ async function findActivitiesBookingCount(activitieId: number) {
 
 const activitiesRepository = {
   findActivitiesDays,
+  findActivitiesDayById,
   findActivitiesSpace,
+  findActivitiesSpaceById,
   findActivities,
   findActivitiesBookingCount,
 };
