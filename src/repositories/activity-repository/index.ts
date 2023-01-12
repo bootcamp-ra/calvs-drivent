@@ -1,4 +1,4 @@
-import { prisma } from "@/config";
+import { prisma, redisClient } from "@/config";
 
 async function findByTicketTypeId(ticketTypeId: number) {
   return prisma.activity.findMany({
@@ -17,6 +17,14 @@ async function findByTicketTypeId(ticketTypeId: number) {
   });
 }
 
+async function getActivitiesRedis(ticketTypeId: number) {
+  return redisClient.get(`activities${ticketTypeId.toString()}`) as any;
+}
+
+async function setActivitiesRedis(activities: any, ticketTypeId: number) {
+  await redisClient.set(`activities${ticketTypeId.toString()}`, JSON.stringify(activities));
+}
+
 async function getActivityById(activityId: number) {
   return prisma.activity.findFirst({
     where: {
@@ -32,6 +40,10 @@ async function postTicketActivity(ticketId: number, activityId: number) {
       activityId
     }
   });
+}
+
+async function deleteRedisActivities(ticketTypeId: number) {
+  await redisClient.del(`activities${ticketTypeId.toString()}`);
 }
 
 async function getTicketActivity(ticketId: number, activityId: number) {
@@ -55,7 +67,8 @@ async function getTicketsActivitiesByTicketId(ticketId: number) {
 }
 
 const activityRepository = {
-  findByTicketTypeId, postTicketActivity, getTicketActivity, getTicketsActivitiesByTicketId, getActivityById
+  findByTicketTypeId, postTicketActivity, getTicketActivity, getTicketsActivitiesByTicketId, getActivityById,
+  setActivitiesRedis, getActivitiesRedis, deleteRedisActivities
 };
 
 export default activityRepository;
