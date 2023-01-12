@@ -8,9 +8,7 @@ export async function listActivities(req: AuthenticatedRequest, res: Response) {
   try {
     const { userId } = req;
     const ticketTypeIdString = req.query.ticketTypeId;
-    if(!ticketTypeIdString) throw notFoundError();
-    const ticketTypeId = Number(ticketTypeIdString);
-    if(isNaN(ticketTypeId)) throw notFoundError();
+    const ticketTypeId = verifyTicketTypeId(ticketTypeIdString);
     const activities = await activityService.getActivities(ticketTypeId);
     return res.status(httpStatus.OK).send(activities);
   } catch (error) {
@@ -21,7 +19,9 @@ export async function listActivities(req: AuthenticatedRequest, res: Response) {
 export async function enterActivity(req: AuthenticatedRequest, res: Response) {
   try {
     const { ticketId, activityId } = req.body;
-    const ticketActivity = await activityService.postTicketActivity(ticketId, activityId);
+    const ticketTypeIdString = req.query.ticketTypeId;
+    const ticketTypeId = verifyTicketTypeId(ticketTypeIdString);
+    const ticketActivity = await activityService.postTicketActivity(ticketId, activityId, ticketTypeId);
     return res.status(httpStatus.CREATED).send(ticketActivity);
   } catch (error) {
     if(error.details[0]==="Activity time conflict") {
@@ -32,4 +32,11 @@ export async function enterActivity(req: AuthenticatedRequest, res: Response) {
     }
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
+}
+
+function verifyTicketTypeId(ticketTypeIdString: any) {
+  if(!ticketTypeIdString) throw notFoundError();
+  const ticketTypeId = Number(ticketTypeIdString);
+  if(isNaN(ticketTypeId)) throw notFoundError();
+  return ticketTypeId;
 }
