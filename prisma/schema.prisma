@@ -138,8 +138,8 @@ model Activity {
   id             Int              @id @default(autoincrement())
   name           String           @db.VarChar(200)
   place          String           @db.VarChar(200)
-  startDate      DateTime         @db.Date
-  endDate        DateTime         @db.Date
+  startDate      DateTime         @db.Timestamp()
+  endDate        DateTime         @db.Timestamp()
   ticketTypeId   Int
   capacity       Int
   TicketType     TicketType      @relation(fields: [ticketTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)

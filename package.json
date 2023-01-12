@@ -91,6 +91,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "ntl": "^5.1.0",
+    "redis": "^4.5.1",
     "reflect-metadata": "^0.1.13"
   }
 }
