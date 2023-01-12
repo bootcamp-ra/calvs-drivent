@@ -12,7 +12,7 @@ async function getActivities(ticketTypeId: number) {
 
 async function postTicketActivity(ticketId: number, activityId: number) {
   const ticketActivityCheck = await activityRepository.getTicketActivity(ticketId, activityId);
-  if(ticketActivityCheck) {
+  if (ticketActivityCheck) {
     throw invalidDataError(["Activity already marked for this ticket"]);
   }
 
@@ -20,16 +20,22 @@ async function postTicketActivity(ticketId: number, activityId: number) {
   const ticketActivities = await activityRepository.getTicketsActivitiesByTicketId(ticketId);
 
   for (const ticketAct of ticketActivities) {
-    if(newTicketactivity.startDate > ticketAct.Activity.startDate && newTicketactivity.startDate < ticketAct.Activity.endDate) {
+    if (
+      newTicketactivity.startDate >= ticketAct.Activity.startDate &&
+      newTicketactivity.startDate < ticketAct.Activity.endDate
+    ) {
       throw invalidDataError(["Activity time conflict"]);
     }
-    if(newTicketactivity.endDate > ticketAct.Activity.startDate && newTicketactivity.endDate < ticketAct.Activity.endDate) {
+    if (
+      newTicketactivity.endDate > ticketAct.Activity.startDate &&
+      newTicketactivity.endDate <= ticketAct.Activity.endDate
+    ) {
       throw invalidDataError(["Activity time conflict"]);
     }
   }
-  
+
   const ticketActivity = await activityRepository.postTicketActivity(ticketId, activityId);
-  if(!ticketActivity) {
+  if (!ticketActivity) {
     throw notFoundError();
   }
 
