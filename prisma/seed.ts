@@ -23,6 +23,7 @@ async function main() {
   await prisma.ticketType.deleteMany();
   await prisma.room.deleteMany();
   await prisma.hotel.deleteMany();
+  await prisma.activities.deleteMany();
   await prisma.activitiesDate.deleteMany();
   await prisma.activitiesSpace.deleteMany();
 
