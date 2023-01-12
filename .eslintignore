@@ -11,3 +11,5 @@ prisma/**/*
 docker-compose*
 Dockerfile*
 nginx.conf
+dump.rdb
+dump.sql
