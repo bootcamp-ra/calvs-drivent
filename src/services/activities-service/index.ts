@@ -51,6 +51,11 @@ async function getActivitiesBookingCounting(activitieId: number) {
   return activitiesBooking;
 }
 
+async function getUserBookedActivitie(activitieId: number, userId: number) {
+  const userBooking = await activitiesRepository.findActivitieBookedByUser(activitieId, userId);
+  return (userBooking)? true : false;
+}
+
 function activitieConflict(activitie: Activities, userBooking: (ActivitiesBooking & { Activities: Activities; })[] ) {
   for(let i=0; i<userBooking.length; i++) {
     if(userBooking[i].Activities.dateId === activitie.dateId) {
@@ -88,6 +93,7 @@ const activitiesService = {
   getActivities,
   getActivitiesBookingCounting,
   bookActivity,
+  getUserBookedActivitie,
 };
 
 export default activitiesService;

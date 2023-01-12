@@ -41,6 +41,19 @@ async function findActivitiesBookingCount(activitieId: number) {
   });
 }
 
+async function findActivitieBookedByUser(activitieId: number, userId: number) {
+  return prisma.activitiesBooking.findFirst({
+    where: {
+      activitieId,
+      Ticket: {
+        Enrollment: {
+          userId,
+        }
+      }
+    }
+  });
+}
+
 async function findActivitieById(activitieId: number) {
   return prisma.activities.findFirst({
     where: {
@@ -79,6 +92,7 @@ const activitiesRepository = {
   findActivitieById,
   findActivitiesBookingByUser,
   createActivityBooking,
+  findActivitieBookedByUser,
 };
 
 export default activitiesRepository;

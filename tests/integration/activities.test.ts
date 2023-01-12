@@ -352,7 +352,7 @@ describe("GET /activities/booking/:activitieId", () => {
       const response = await server.get(`/activities/booking/${activitieId}`).set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(httpStatus.OK);
-      expect(response.body).toEqual({ activitiesBookingCount: 1 });
+      expect(response.body).toEqual({ activitiesBookingCount: 1, userBooked: true });
     });
   });
 });

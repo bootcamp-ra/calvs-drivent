@@ -79,10 +79,11 @@ export async function getActivitiesBookingCount(req: AuthenticatedRequest, res: 
     }
 
     const activitiesBookingCount = await activitiesService.getActivitiesBookingCounting(activitieId);
+    const userBooked = await activitiesService.getUserBookedActivitie(activitieId, userId);
 
-    return res.status(httpStatus.OK).send({ activitiesBookingCount });
+    return res.status(httpStatus.OK).send({ activitiesBookingCount, userBooked });
   } catch (error) {
-    return res.status(httpStatus.OK).send({ activitiesBookingCount: 0 });
+    return res.status(httpStatus.OK).send({ activitiesBookingCount: 0, userBooked: false });
   }
 }
 
