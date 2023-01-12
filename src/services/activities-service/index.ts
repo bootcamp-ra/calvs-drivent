@@ -55,8 +55,10 @@ function activitieConflict(activitie: Activities, userBooking: (ActivitiesBookin
   for(let i=0; i<userBooking.length; i++) {
     if(userBooking[i].Activities.dateId === activitie.dateId) {
       if(activitie.start >= userBooking[i].Activities.start && activitie.start < userBooking[i].Activities.start + userBooking[i].Activities.duration) {
+        console.log("po");
         return true;
-      } else if(activitie.start + activitie.duration > userBooking[i].Activities.start) {
+      } else if(activitie.start < userBooking[i].Activities.start && activitie.start + activitie.duration > userBooking[i].Activities.start) {
+        console.log("po2");
         return true;
       }
     }
