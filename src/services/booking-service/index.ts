@@ -52,10 +52,10 @@ async function changeBookingRoomById(userId: number, roomId: number) {
     throw cannotBookingError();
   }
 
-  return bookingRepository.upsertBooking({
+  return bookingRepository.upsertBookingTransaction({
     id: booking.id,
     roomId,
-    userId
+    userId,
   });
 }
 

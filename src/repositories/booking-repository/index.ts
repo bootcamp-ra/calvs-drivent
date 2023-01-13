@@ -1,6 +1,5 @@
 import { prisma } from "@/config";
 import { Booking } from "@prisma/client";
-import hotelRepository from "../hotel-repository";
 
 type CreateParams = Omit<Booking, "id" | "createdAt" | "updatedAt">;
 type UpdateParams = Omit<Booking, "createdAt" | "updatedAt">;
@@ -55,11 +54,35 @@ async function upsertBooking({ id, roomId, userId }: UpdateParams) {
   });
 }
 
+async function upsertBookingTransaction({ id, roomId, userId }: UpdateParams) {
+  const newBooking = prisma.booking.upsert({
+    where: {
+      id,
+    },
+    create: {
+      roomId,
+      userId,
+    },
+    update: {
+      roomId,
+    },
+  });
+
+  try {
+    await prisma.$transaction([newBooking]);
+    return newBooking;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+}
+
 const bookingRepository = {
   create,
   findByRoomId,
   findByUserId,
   upsertBooking,
+  upsertBookingTransaction,
 };
 
 export default bookingRepository;
