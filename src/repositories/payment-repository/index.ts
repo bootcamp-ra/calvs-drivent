@@ -17,6 +17,7 @@ async function createPayment(ticketId: number, params: PaymentParams) {
       ...params,
     }
   });
+
   const update = prisma.ticket.update({
     where: {
       id: ticketId,
