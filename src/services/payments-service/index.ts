@@ -2,6 +2,11 @@ import { notFoundError, unauthorizedError } from "@/errors";
 import paymentRepository from "@/repositories/payment-repository";
 import ticketRepository from "@/repositories/ticket-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
+import { Payment, prisma } from "@prisma/client";
+import Stripe from "stripe";
+
+//eslint-disable-next-line @typescript-eslint/no-var-requires
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 async function verifyTicketAndEnrollment(ticketId: number, userId: number) {
   const ticket = await ticketRepository.findTickeyById(ticketId);
@@ -27,23 +32,29 @@ async function getPaymentByTicketId(userId: number, ticketId: number) {
   return payment;
 }
 
-async function paymentProcess(ticketId: number, userId: number, cardData: CardPaymentParams) {
+async function paymentProcess(ticketId: number, userId: number, cardData: any, id: number) {
   await verifyTicketAndEnrollment(ticketId, userId);
-
   const ticket = await ticketRepository.findTickeWithTypeById(ticketId);
 
   const paymentData = {
     ticketId,
     value: ticket.TicketType.price,
-    cardIssuer: cardData.issuer,
-    cardLastDigits: cardData.number.toString().slice(-4),
+    cardIssuer: (cardData.id? cardData.id.card.brand: cardData.issuer), 
+    cardLastDigits: (cardData.id?  cardData.id.card.last4: cardData.number.toString().slice(-4)),
   };
 
-  const payment = await paymentRepository.createPayment(ticketId, paymentData);
+  const payment = paymentRepository.createPayment(ticketId, paymentData);
 
-  await ticketRepository.ticketProcessPayment(ticketId);
-
-  return payment;
+  if(id) {
+    const session = await stripe.paymentIntents.create({
+      amount: ticket.TicketType.price,
+      currency: "USD",
+      description: "Ingresso",
+      payment_method: id,
+      confirm: true
+    });
+  }
+  return (payment);
 }
 
 export type CardPaymentParams = {

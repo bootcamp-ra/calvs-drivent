@@ -50,6 +50,16 @@ export async function getActivities(req: AuthenticatedRequest, res: Response) {
       return res.sendStatus(httpStatus.FORBIDDEN);
     }
 
+    const activitiesDate = await activitiesService.getActivitiesDayById(dateId);
+    if (dateId != activitiesDate.id) {
+      return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+
+    const activitiesSpace = await activitiesService.getActivitiesSpaceById(spaceId);
+    if (spaceId != activitiesSpace.id) {
+      return res.sendStatus(httpStatus.NO_CONTENT);
+    }
+
     const activities = await activitiesService.getActivities(dateId, spaceId);
 
     return res.status(httpStatus.OK).send(activities);
@@ -69,9 +79,25 @@ export async function getActivitiesBookingCount(req: AuthenticatedRequest, res: 
     }
 
     const activitiesBookingCount = await activitiesService.getActivitiesBookingCounting(activitieId);
+    const userBooked = await activitiesService.getUserBookedActivitie(activitieId, userId);
 
-    return res.status(httpStatus.OK).send({ activitiesBookingCount });
+    return res.status(httpStatus.OK).send({ activitiesBookingCount, userBooked });
   } catch (error) {
-    return res.status(httpStatus.OK).send({ activitiesBookingCount: 0 });
+    return res.status(httpStatus.OK).send({ activitiesBookingCount: 0, userBooked: false });
+  }
+}
+
+export async function postActivitieBooking(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const activitieId = Number(req.params.activitieId);
+
+  try {
+    const booking = await activitiesService.bookActivity(userId, activitieId);
+    return res.status(httpStatus.OK).send(booking);
+  } catch (error) {
+    if (error.name === "RequestError") return res.sendStatus(httpStatus.BAD_REQUEST);
+    if (error.name === "cannotListHotelsError") return res.sendStatus(httpStatus.FORBIDDEN);
+    if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
+    if (error.name === "ConflictError") return res.sendStatus(httpStatus.FORBIDDEN);
   }
 }

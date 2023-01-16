@@ -1,5 +1,6 @@
 import { AuthenticatedRequest } from "@/middlewares";
 import paymentService from "@/services/payments-service";
+import { Payment } from "@prisma/client";
 import { Response } from "express";
 import httpStatus from "http-status";
 
@@ -31,12 +32,12 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
     const {
       ticketId,
       cardData,
+      id,
     } = req.body;
-
     if (!ticketId || !cardData) {
       return res.sendStatus(httpStatus.BAD_REQUEST);
     }
-    const payment = await paymentService.paymentProcess(ticketId, userId, cardData);
+    const payment = await paymentService.paymentProcess(ticketId, userId, cardData, id);
 
     if (!payment) {
       return res.sendStatus(httpStatus.NOT_FOUND);
