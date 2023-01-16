@@ -87,6 +87,7 @@
     "http-status": "^1.5.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "redis": "^4.5.1",
     "reflect-metadata": "^0.1.13",
     "sinatra": "0.0.5",
     "stripe": "^11.6.0"
