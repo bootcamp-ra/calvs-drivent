@@ -1,0 +1,24 @@
+version: "3"
+services:
+  db:
+    image: postgres:13
+    container_name: db
+    restart: always 
+    ports:
+      - 2345:5432
+    env_file:
+      - .env.development #configurar POSTGRES_USER, POSTGRES_PASSWORD e POSTGRES_DB
+    volumes: 
+      - postgres:/var/lib/postgresql/data  
+
+  app:
+    container_name: app
+    build: . #Dockerfile do node se encontra na pasta atual
+    ports:
+      - 5000:4002
+    depends_on:
+      - db # só sobe quando o postgres tiver no ar
+    volumes:  
+      - .:/app
+volumes: 
+  postgres:
