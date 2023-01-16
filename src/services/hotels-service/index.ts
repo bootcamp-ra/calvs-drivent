@@ -70,7 +70,7 @@ async function hotelVacancy(hotel: Hotel & {
   Rooms: Room[];
 }) {
   const bookings = await bookingRepository.countHotelBookings(hotel.id);
-  const totalCapacity = (hotel.Rooms).map((room) => room?.capacity).reduce((total, room) => total+room, 0);
+  const totalCapacity: number = (hotel.Rooms).map((room) => room?.capacity).reduce((total, room) => total+room, 0);
   
   return {
     vacancy: totalCapacity - bookings
@@ -80,6 +80,7 @@ async function hotelVacancy(hotel: Hotel & {
 const hotelService = {
   getHotels,
   getHotelsWithRooms,
+  listHotels,
 };
 
 export default hotelService;
