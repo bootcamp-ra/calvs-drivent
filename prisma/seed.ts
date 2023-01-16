@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { createClient } from "redis";
 import dayjs from "dayjs";
 const prisma = new PrismaClient();
+const cache = createClient();
 
 async function main() {
   let event = await prisma.event.findFirst();
@@ -16,6 +18,10 @@ async function main() {
     });
   }
 
+  await cache.connect();
+  await cache.flushAll();
+  await cache.disconnect();
+  
   await prisma.activitiesBooking.deleteMany();
   await prisma.booking.deleteMany();
   await prisma.payment.deleteMany();
