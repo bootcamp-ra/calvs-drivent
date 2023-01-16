@@ -32,7 +32,7 @@ async function getPaymentByTicketId(userId: number, ticketId: number) {
   return payment;
 }
 
-async function paymentProcess(ticketId: number, userId: number, cardData: any, id: any) {
+async function paymentProcess(ticketId: number, userId: number, cardData: any, id: number) {
   await verifyTicketAndEnrollment(ticketId, userId);
   const ticket = await ticketRepository.findTickeWithTypeById(ticketId);
 
