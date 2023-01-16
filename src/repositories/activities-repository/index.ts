@@ -1,4 +1,4 @@
-import { prisma } from "@/config";
+import { cache, prisma } from "@/config";
 
 async function findActivitiesDays() {
   return prisma.activitiesDate.findMany();
@@ -25,12 +25,18 @@ async function findActivitiesSpaceById(spaceId: number) {
 }
 
 async function findActivities(dateId: number, spaceId: number) {
-  return prisma.activities.findMany({
+  const activitiesCache = await cache.get(`activities/date:${dateId}/space:${spaceId}`);
+  if(activitiesCache) return JSON.parse(activitiesCache);
+
+  const activities = await prisma.activities.findMany({
     where: {
       dateId: dateId,
       spaceId: spaceId,
     }
   });
+
+  cache.set(`activities/date:${dateId}/space:${spaceId}`, JSON.stringify(activities));
+  return activities;
 }
 
 async function findActivitiesBookingCount(activitieId: number) {

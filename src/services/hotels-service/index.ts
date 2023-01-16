@@ -37,7 +37,6 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
 
   const roomTypes = hotelRoomTypes(hotel);
   const vacancy = await hotelVacancy(hotel);
-
   return {
     ...hotel,
     roomTypes,
