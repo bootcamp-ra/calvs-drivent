@@ -63,6 +63,8 @@ const bookingService = {
   bookingRoomById,
   getBooking,
   changeBookingRoomById,
+  checkEnrollmentTicket,
+  checkValidBooking
 };
 
 export default bookingService;

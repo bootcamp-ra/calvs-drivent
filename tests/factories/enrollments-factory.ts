@@ -1,9 +1,10 @@
-import faker from "@faker-js/faker";
-import { generateCPF, getStates } from "@brazilian-utils/brazilian-utils";
-import { User } from "@prisma/client";
+/* eslint-disable quotes */
+import faker from '@faker-js/faker';
+import { generateCPF, getStates } from '@brazilian-utils/brazilian-utils';
+import { Address, Enrollment, User } from '@prisma/client';
 
-import { createUser } from "./users-factory";
-import { prisma } from "@/config";
+import { createUser } from './users-factory';
+import { prisma } from '@/config';
 
 export async function createEnrollmentWithAddress(user?: User) {
   const incomingUser = user || (await createUser());
@@ -13,7 +14,7 @@ export async function createEnrollmentWithAddress(user?: User) {
       name: faker.name.findName(),
       cpf: generateCPF(),
       birthday: faker.date.past(),
-      phone: faker.phone.phoneNumber("(##) 9####-####"),
+      phone: faker.phone.phoneNumber('(##) 9####-####'),
       userId: incomingUser.id,
       Address: {
         create: {
@@ -34,10 +35,10 @@ export async function createEnrollmentWithAddress(user?: User) {
 
 export function createhAddressWithCEP() {
   return {
-    logradouro: "Avenida Brigadeiro Faria Lima",
-    complemento: "de 3252 ao fim - lado par",
-    bairro: "Itaim Bibi",
-    cidade: "São Paulo",
-    uf: "SP",
+    logradouro: 'Avenida Brigadeiro Faria Lima',
+    complemento: 'de 3252 ao fim - lado par',
+    bairro: 'Itaim Bibi',
+    cidade: 'São Paulo',
+    uf: 'SP',
   };
 }
