@@ -45,3 +45,19 @@ export async function createTicket(enrollmentId: number, ticketTypeId: number, s
     },
   });
 }
+
+export function getTicketTypeReturn() {
+  const expected: TicketType[] = [
+    {
+      id: 1,
+      name: 'Presencial',
+      price: 3000,
+      isRemote: false,
+      includesHotel: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  return expected;
+}
