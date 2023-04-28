@@ -1,6 +1,7 @@
-import faker from "@faker-js/faker";
-import { prisma } from "@/config";
-import { TicketStatus } from "@prisma/client";
+/* eslint-disable quotes */
+import faker from '@faker-js/faker';
+import { prisma } from '@/config';
+import { TicketStatus, TicketType } from '@prisma/client';
 
 export async function createTicketType() {
   return prisma.ticketType.create({
@@ -43,4 +44,20 @@ export async function createTicket(enrollmentId: number, ticketTypeId: number, s
       status,
     },
   });
+}
+
+export function getTicketTypeReturn() {
+  const expected: TicketType[] = [
+    {
+      id: 1,
+      name: 'Presencial',
+      price: 3000,
+      isRemote: false,
+      includesHotel: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  return expected;
 }
