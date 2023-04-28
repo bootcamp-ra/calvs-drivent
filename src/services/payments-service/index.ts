@@ -57,6 +57,7 @@ export type CardPaymentParams = {
 const paymentService = {
   getPaymentByTicketId,
   paymentProcess,
+  verifyTicketAndEnrollment
 };
 
 export default paymentService;

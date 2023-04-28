@@ -1,20 +1,9 @@
 /* eslint-disable quotes */
-import hotelsService from '../../src/services/hotels-service';
 import { notFoundError } from '@/errors';
-import {
-  enrollmentWithAddressReturn,
-  findTicketByEnrollmentIdReturn,
-  findTicketFailByEnrollmentIdReturn,
-  getHotelsMock,
-  getRoomsByHotelIdMock,
-  getTicketTypeReturn,
-} from '../factories';
+import { enrollmentWithAddressReturn, findTicketByEnrollmentIdReturn, getTicketTypeReturn } from '../factories';
 import enrollmentRepository from '@/repositories/enrollment-repository';
 import ticketRepository from '@/repositories/ticket-repository';
-import { cannotListHotelsError } from '@/errors/cannot-list-hotels-error';
-import hotelRepository from '@/repositories/hotel-repository';
 import ticketService from '@/services/tickets-service';
-import { TicketStatus } from '@prisma/client';
 
 describe('getTicketTypes function', () => {
   it('should get ticket types', async () => {

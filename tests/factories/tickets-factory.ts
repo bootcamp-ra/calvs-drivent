@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 import faker from '@faker-js/faker';
 import { prisma } from '@/config';
-import { Ticket, TicketStatus, TicketType } from '@prisma/client';
+import { TicketStatus, TicketType } from '@prisma/client';
 
 export async function createTicketType() {
   return prisma.ticketType.create({
